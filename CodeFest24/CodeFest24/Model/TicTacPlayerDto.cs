@@ -8,335 +8,217 @@ namespace CodeFest24.Model
 {
     public class TicTacPlayerDto
     {
- //       Data Structure:																																	Here is the example of  Training Game's ticktack:																						
-	//- id				ID of request																													{																					
-	//- timestamp				Time of request																														"id": 15,																				
-	//- map_info				Map information																														"timestamp": 1730277449860,																				
-	//				Properties of Map Info																														"map_info": {																				
-	//					- size: 			The information of map. 																											"size": { "cols": 26, "rows": 14 },																			
-	//								Include size of map by horizotal and vertical squares.																											"players": [																			
-	//								Properties of Size:																												{																		
-	//									- rows:			The max number of cell of map by vertical.																									"id": "player1-xxx",																	
-	//									- cols:			The max number of cell of map by horizontal.																									"currentPosition": { "col": 22, "row": 8 },																	
-	//					- players: 			The array list of player on map.																													"spawnBegin": { "col": 22, "row": 8 },																	
-	//								Properties of Player:																													"score": 0,																	
-	//								- id :						The Id of competitor or player																							"lives": 1000,																	
-	//								- spawnBegin: 						The player or conpetitor's position is born at the start of the																							"transformType": 1,																	
-	//														game on map  (row,col) by horizotal and vertical squares.																							"ownerWeapon": [1],																	
-	//								- currentPosition:						The current position of player or competitor on map (row,col) 																							"currentWeapon": 1,																	
-	//														by horizotal and vertical squares.																							"hasTransform": false,																	
-	//								- power: 						The power of the player's bomb (not of the competitor).																							"timeToUseSpecialWeapons": 5,																	
-	//								- speed: 						The speed of the player (not of the competitor).																							"isStun": false,																	
-	//								- delay: 						Time interval between 2 times of placing a bomb of the 																							"speed": 230,																	
-	//														player(not of the competitor).																							"power": 1,																	
-	//								- score:						Current score of player.																							"delay": 2000,																	
-	//								- lives:						Player’s lives left.																							"box": 0,																	
-	//								- box: 						Number of destroyed box.																							"stickyRice": 0,																	
-	//								- stickyRice:						Number of items collected																							"chungCake": 0,																	
-	//								- chungCake:						Number of items collected																							"nineTuskElephant": 0,																	
-	//								- nineTuskElephant:						Number of items collected																							"nineSpurRooster": 0,																	
-	//								- nineSpurRooster:						Number of items collected																							"nineManeHairHorse": 0,																	
-	//								- nineManeHairHorse:						Number of items collected																							"holySpiritStone": 0,																	
-	//								- holySpiritStone:						Number of items collected																							"eternalBadge": 0,																	
-	//														This item will help the player increase the number of uses																							"brickWall": 0																	
-	//														of the special weapon of the god they have chosen.																						},{																		
-	//														Max: 4 times																							"id": "player2-xxx",																	
-	//								- eternalBadge:						Received when the player collects 5 required items.																							"currentPosition": { "col": 3, "row": 7 },																	
-	//														After owning this badge, he will be able to marry Mi Nuong																							"spawnBegin": { "col": 3, "row": 7 },																	
-	//								- brickWall:						Number of brick walls you destroyed with the wooden pestle																							"score": 0,																	
-	//								- transformType:						The kind of god you want to be																							"lives": 1000,																	
-	//								- hasTransform:						Tell if you have become a god or not																							"transformType": 1,																	
-	//								- ownerWeapon:						Weapons you own																							"ownerWeapon": [1],																	
-	//														Values of weapon in array:																							"currentWeapon": 1,																	
-	//														1:	Wooden pestle																						"hasTransform": false,																	
-	//														2:	Phach Than (Bomb)																						"timeToUseSpecialWeapons": 5,																	
-	//								- curWeapon:						The weapon the player is using																							"isStun": false,																	
-	//								- isStun:						Indicates whether the player is stunned or not.																							"speed": 230,																	
-	//														(stunned by weapon: wooden pestle, lasts 3 seconds)																							"power": 1,																	
-	//								- isChild:						Check the player is child or not																							"delay": 2000,																	
-	//								- timeToUseSpecialWeapons:							Number of times special weapons can be used remaining.																						"box": 0,																	
-	//																																					"stickyRice": 0,																	
-	//					- map: 			2D array describing infomation of map.																													"chungCake": 0,																	
-	//								Values of item in array:																													"nineTuskElephant": 0,																	
-	//										0 - Empty Cell (Can move through them)																											"nineSpurRooster": 0,																	
-	//										1 - A Wall (None destructible cell)																											"nineManeHairHorse": 0,																	
-	//										2 - A Balk (Destructible cell)																											"holySpiritStone": 0,																	
-	//										3 - A Brick Wall (Destructible cell by wooden pestle weapon)																											"eternalBadge": 0,																	
-	//										5 - A Prison Place 																											"brickWall": 0																	
-	//										6 - God Badge (used to turn the character into a God)																										}																		
-	//										7 - Cells destroyed by special weapons (Can move through them)																									],																			
-	//					- bombs:			The array list of bombs on map.																											"map": [																			
-	//								Properties of Bomb:																												[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],																		
-	//									- row:				The horizontal position of the item.																							[ 1, 5, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 5, 1 ],																		
-	//									- col:				The vertical position of the item.																							[ 1, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2, 1 ],																		
-	//									- remainTime: 				The bomb will explode at [specific time]																							[ 1, 2, 2, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 1, 0, 0, 0, 1, 0, 0, 0, 2, 2, 1 ],																		
-	//									- playerId:				Owner of bomb																							[ 1, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0, 2, 2, 2, 3, 3, 3, 3, 0, 1, 0, 0, 2, 0, 0, 1 ],																		
-	//									- power:				When was the bomb created?																							[ 1, 6, 0, 2, 2, 0, 0, 0, 0, 1, 0, 2, 2, 2, 0, 1, 0, 0, 0, 1, 0, 2, 2, 0, 6, 1 ],																		
-	//									- createdAt:				Current bomb power																							[ 1, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 2, 2, 0, 1, 1, 1, 1, 0, 0, 2, 0, 0, 2, 1 ],																		
-	//					- spoils: 			The array list of spoils on map.																												[ 1, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 1, 0, 3, 0, 1, 0, 2, 0, 0, 2, 1 ],																		
-	//								Properties of Spoil:																												[ 1, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 2, 0, 3, 3, 3, 3, 0, 1, 0, 2, 0, 0, 2, 1 ],																		
-	//									- row:				The position of item in horizontal.																							[ 1, 0, 0, 2, 2, 0, 0, 0, 0, 1, 0, 0, 2, 2, 0, 1, 0, 0, 0, 1, 0, 2, 2, 0, 0, 1 ],																		
-	//									- col:				The position of item in vertical.																							[ 1, 0, 0, 2, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 2, 1, 1, 1, 1, 0, 0, 0, 2, 0, 0, 1 ],																		
-	//									- spoil_type : 				Spoil type specification																							[ 1, 2, 2, 0, 0, 0, 0, 3, 2, 2, 0, 2, 3, 2, 0, 2, 3, 2, 0, 2, 0, 0, 0, 2, 2, 1 ],																		
-	//													Values of spoil types: 								Bonus:															[ 1, 5, 0, 0, 0, 0, 0, 2, 2, 2, 0, 6, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 5, 1 ],																		
-	//													32 - STICKY RICE								1 score															[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]																		
-	//													33 - Chung Cake								2 score														],																			
-	//													34 - Nine Tusk Elephant								5 points (increases power by 1 unit)														"bombs": [],																			
-	//													35 - Nine Spur Rooster								3 score														"spoils": [],																			
-	//													36 - Nine Mane Hair Horse								4 score														"weaponHammers": [],																			
-	//													37 - Holy Spirit Stone								3 score														"gameStatus": null,																			
-	//								If you collect 5 items of each type (32-36), you will increase the bomb's power by 1 unit.																											"cellSize": 35																			
-	//					- weaponHammers:						The array list of hammer on map.																							},																				
-	//											Properties of hammers:																							"tag": "update-data",																				
-	//												- playerId:				playerId of the hammer's owner																		"gameRemainTime": 0																				
-	//												- power:				blast radius after hammer hits target																	}																					
-	//												- destination:				hammer destination																																						
-	//												- createdAt:				the moment the hammer was created																																						
-																																																																														
-	//					- weaponWinds						The array list of weapon wind on map.																																											
-	//											Properties of weaponWinds:																																											
-	//												- playerId:				playerId of the hammer's owner																																						
-	//												- currentRow:				hammer row position																																						
-	//												- currentCol:				hammer col position																																						
-	//												- createdAt:				the moment the weapon wind was created																																						
-	//												- destination:				weapon wind destination																																						
-																																																																														
-	//					- cellSize:			The size of a cell on the map																																														
-	//								Values of cell:																																														
-	//									- Training: 				35x35 pixel																																									
-	//									- Fighting:				55x55 pixel																																									
-	//					- gameStatus: 				Only have in fighting stage.																																													
-	//									running round:								2																																					
-	//									pause round:								3																																					
-	//									game over:								10																																					
-	//- tag: 		The reason for this ticktac update																																																				
-	//		Player's tag values:																																																				
-	//				player:moving-banned								Player's moving is blocking, two player moves to same cell.																																										
-	//				player:start-moving								Player is started moving.																																										
-	//				player:stop-moving								Player is stopped moving.																																										
-	//				player:be-isolated								Player is blocking in quarantine area.																																										
-	//				player:back-to-playground								Player was moved out quarantine area, and stand on floor.																																										
-	//				player:pick-spoil								Player just picked a spoil.																																										
-	//				player:stun-by-weapon								Notice when the player is stunned																																										
-	//				player:stun-timeout								Notifies the player that the stun time has expired.																																										
-	//		Bomb's tag values:																																																				
-	//				bomb:exploded								Bomb has exploded.																																										
-	//				bomb:setup								Bomb has setup on map.																																										
-	//		Game's tag values																																																				
-	//				start-game								Game is started.																																										
-	//				update-data								Auto looping in interval time. (Ex: every 500ms)																																										
-	//		Wedding's tag values:																																																				
-	//				player:into-wedding-room								Notice that the player go to the wedding room																																										
-	//				player:outto-wedding-room								Notice that the player leaving the wedding room																																										
-	//				player:completed wedding								Declare that the marriage is complete																																										
-	//		Hammer tag values																																																				
-	//				hammer:exploded								Location where the hammer hits																																										
-	//		Wooden-pestle tag values																																																				
-	//				Wooden-pestle:setup								Player starts to use pastle																																										
-	//		WeaponWind tag values																																																				
-	//				wind:exploded								Current location of the weapon wind (in horizontal and vertical)																																										
-																																																																														
-	//- player_id: 				The player’s id whose action made the update 																																																		
-	//- gameRemainTime:						Remain time in seconds of game before time over.																																																
-																																																																														
-	//API-3
-	//POST
-	//drive player
-	//METHOD																																		Send request to move your bot																						
-	//		socketClient.emit('drive player', Parameters)																																																								
-	//																																				Example-1: Move player with many steps																						
-	//		INPUT PARAMETERS																																		socketClient.emit('drive player', {																						
-	//			- direction:				The player's series of movement direction. Data type is String.																													    "direction": "1111333332222224444",																						
-	//							Value of direction:																													})																						
-	//									1 - Move LEFT																																																	
-	//									2 - Move RIGHT.																											Example-2: Move bomber with only one step																						
-	//									3 - Move UP																											socketClient.emit('drive player', {																						
-	//									4 - Move DOWN																											    "direction": "3",																						
-	//									b 	Based on the current weapon used to activate:																										})																						
-	//												- If the current weapon is a wooden bat. will perform a bat strike 																																															
-	//												in the direction of the character's face																								Example-3: Move player and use the weapon																						
-	//												- If the current weapon is a Phach Than. will perform a lightning strike																									socketClient.emit('drive player', {																						
-	//												at the current location																								    "direction": "111b2222",																						
-	//									x - Stop Moving																											})																						
-	//				- characterType:							The player decides who they want to control.																																																
-	//										If they want to control a `Supporting Character`. characterType is 'child'																										Example-4: Move `supporting character` with many steps																						
-	//																																				socketClient.emit('drive player', {																						
-	//										Supporting Character: This character will appear after the player marries Mi Nuong.																										    "direction": "1111333332222224444",																						
-	//		Data Format:				 JSON																														    "characterType": "child",																						
-	//																																				})																						
-	//		Data Structure:																																																								
-	//						{																														Example-5: Move `supporting character` with only one step																						
-	//							"direction": "xxxxx"																														socketClient.emit('drive player', {																						
-	//							"characterType": "child" | undefined																														    "direction": "2",																						
-	//						}																														    "characterType": "child",																						
-	//																																				})																						
-																																																																														
-	//																																				Example-6: Move `supporting character`  and use the weapon																						
-	//																			Data Structure:																																	Here is the example of  Training Game's ticktack:																						
-	//- id				ID of request																													{																					
-	//- timestamp				Time of request																														"id": 15,																				
-	//- map_info				Map information																														"timestamp": 1730277449860,																				
-	//				Properties of Map Info																														"map_info": {																				
-	//					- size: 			The information of map. 																											"size": { "cols": 26, "rows": 14 },																			
-	//								Include size of map by horizotal and vertical squares.																											"players": [																			
-	//								Properties of Size:																												{																		
-	//									- rows:			The max number of cell of map by vertical.																									"id": "player1-xxx",																	
-	//									- cols:			The max number of cell of map by horizontal.																									"currentPosition": { "col": 22, "row": 8 },																	
-	//					- players: 			The array list of player on map.																													"spawnBegin": { "col": 22, "row": 8 },																	
-	//								Properties of Player:																													"score": 0,																	
-	//								- id :						The Id of competitor or player																							"lives": 1000,																	
-	//								- spawnBegin: 						The player or conpetitor's position is born at the start of the																							"transformType": 1,																	
-	//														game on map  (row,col) by horizotal and vertical squares.																							"ownerWeapon": [1],																	
-	//								- currentPosition:						The current position of player or competitor on map (row,col) 																							"currentWeapon": 1,																	
-	//														by horizotal and vertical squares.																							"hasTransform": false,																	
-	//								- power: 						The power of the player's bomb (not of the competitor).																							"timeToUseSpecialWeapons": 5,																	
-	//								- speed: 						The speed of the player (not of the competitor).																							"isStun": false,																	
-	//								- delay: 						Time interval between 2 times of placing a bomb of the 																							"speed": 230,																	
-	//														player(not of the competitor).																							"power": 1,																	
-	//								- score:						Current score of player.																							"delay": 2000,																	
-	//								- lives:						Player’s lives left.																							"box": 0,																	
-	//								- box: 						Number of destroyed box.																							"stickyRice": 0,																	
-	//								- stickyRice:						Number of items collected																							"chungCake": 0,																	
-	//								- chungCake:						Number of items collected																							"nineTuskElephant": 0,																	
-	//								- nineTuskElephant:						Number of items collected																							"nineSpurRooster": 0,																	
-	//								- nineSpurRooster:						Number of items collected																							"nineManeHairHorse": 0,																	
-	//								- nineManeHairHorse:						Number of items collected																							"holySpiritStone": 0,																	
-	//								- holySpiritStone:						Number of items collected																							"eternalBadge": 0,																	
-	//														This item will help the player increase the number of uses																							"brickWall": 0																	
-	//														of the special weapon of the god they have chosen.																						},{																		
-	//														Max: 4 times																							"id": "player2-xxx",																	
-	//								- eternalBadge:						Received when the player collects 5 required items.																							"currentPosition": { "col": 3, "row": 7 },																	
-	//														After owning this badge, he will be able to marry Mi Nuong																							"spawnBegin": { "col": 3, "row": 7 },																	
-	//								- brickWall:						Number of brick walls you destroyed with the wooden pestle																							"score": 0,																	
-	//								- transformType:						The kind of god you want to be																							"lives": 1000,																	
-	//								- hasTransform:						Tell if you have become a god or not																							"transformType": 1,																	
-	//								- ownerWeapon:						Weapons you own																							"ownerWeapon": [1],																	
-	//														Values of weapon in array:																							"currentWeapon": 1,																	
-	//														1:	Wooden pestle																						"hasTransform": false,																	
-	//														2:	Phach Than (Bomb)																						"timeToUseSpecialWeapons": 5,																	
-	//								- curWeapon:						The weapon the player is using																							"isStun": false,																	
-	//								- isStun:						Indicates whether the player is stunned or not.																							"speed": 230,																	
-	//														(stunned by weapon: wooden pestle, lasts 3 seconds)																							"power": 1,																	
-	//								- isChild:						Check the player is child or not																							"delay": 2000,																	
-	//								- timeToUseSpecialWeapons:							Number of times special weapons can be used remaining.																						"box": 0,																	
-	//																																					"stickyRice": 0,																	
-	//					- map: 			2D array describing infomation of map.																													"chungCake": 0,																	
-	//								Values of item in array:																													"nineTuskElephant": 0,																	
-	//										0 - Empty Cell (Can move through them)																											"nineSpurRooster": 0,																	
-	//										1 - A Wall (None destructible cell)																											"nineManeHairHorse": 0,																	
-	//										2 - A Balk (Destructible cell)																											"holySpiritStone": 0,																	
-	//										3 - A Brick Wall (Destructible cell by wooden pestle weapon)																											"eternalBadge": 0,																	
-	//										5 - A Prison Place 																											"brickWall": 0																	
-	//										6 - God Badge (used to turn the character into a God)																										}																		
-	//										7 - Cells destroyed by special weapons (Can move through them)																									],																			
-	//					- bombs:			The array list of bombs on map.																											"map": [																			
-	//								Properties of Bomb:																												[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],																		
-	//									- row:				The horizontal position of the item.																							[ 1, 5, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 5, 1 ],																		
-	//									- col:				The vertical position of the item.																							[ 1, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2, 1 ],																		
-	//									- remainTime: 				The bomb will explode at [specific time]																							[ 1, 2, 2, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 1, 0, 0, 0, 1, 0, 0, 0, 2, 2, 1 ],																		
-	//									- playerId:				Owner of bomb																							[ 1, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0, 2, 2, 2, 3, 3, 3, 3, 0, 1, 0, 0, 2, 0, 0, 1 ],																		
-	//									- power:				When was the bomb created?																							[ 1, 6, 0, 2, 2, 0, 0, 0, 0, 1, 0, 2, 2, 2, 0, 1, 0, 0, 0, 1, 0, 2, 2, 0, 6, 1 ],																		
-	//									- createdAt:				Current bomb power																							[ 1, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 2, 2, 0, 1, 1, 1, 1, 0, 0, 2, 0, 0, 2, 1 ],																		
-	//					- spoils: 			The array list of spoils on map.																												[ 1, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 1, 0, 3, 0, 1, 0, 2, 0, 0, 2, 1 ],																		
-	//								Properties of Spoil:																												[ 1, 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 2, 0, 3, 3, 3, 3, 0, 1, 0, 2, 0, 0, 2, 1 ],																		
-	//									- row:				The position of item in horizontal.																							[ 1, 0, 0, 2, 2, 0, 0, 0, 0, 1, 0, 0, 2, 2, 0, 1, 0, 0, 0, 1, 0, 2, 2, 0, 0, 1 ],																		
-	//									- col:				The position of item in vertical.																							[ 1, 0, 0, 2, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 2, 1, 1, 1, 1, 0, 0, 0, 2, 0, 0, 1 ],																		
-	//									- spoil_type : 				Spoil type specification																							[ 1, 2, 2, 0, 0, 0, 0, 3, 2, 2, 0, 2, 3, 2, 0, 2, 3, 2, 0, 2, 0, 0, 0, 2, 2, 1 ],																		
-	//													Values of spoil types: 								Bonus:															[ 1, 5, 0, 0, 0, 0, 0, 2, 2, 2, 0, 6, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 5, 1 ],																		
-	//													32 - STICKY RICE								1 score															[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]																		
-	//													33 - Chung Cake								2 score														],																			
-	//													34 - Nine Tusk Elephant								5 points (increases power by 1 unit)														"bombs": [],																			
-	//													35 - Nine Spur Rooster								3 score														"spoils": [],																			
-	//													36 - Nine Mane Hair Horse								4 score														"weaponHammers": [],																			
-	//													37 - Holy Spirit Stone								3 score														"gameStatus": null,																			
-	//								If you collect 5 items of each type (32-36), you will increase the bomb's power by 1 unit.																											"cellSize": 35																			
-	//					- weaponHammers:						The array list of hammer on map.																							},																				
-	//											Properties of hammers:																							"tag": "update-data",																				
-	//												- playerId:				playerId of the hammer's owner																		"gameRemainTime": 0																				
-	//												- power:				blast radius after hammer hits target																	}																					
-	//												- destination:				hammer destination																																						
-	//												- createdAt:				the moment the hammer was created																																						
-																																																																														
-	//					- weaponWinds						The array list of weapon wind on map.																																											
-	//											Properties of weaponWinds:																																											
-	//												- playerId:				playerId of the hammer's owner																																						
-	//												- currentRow:				hammer row position																																						
-	//												- currentCol:				hammer col position																																						
-	//												- createdAt:				the moment the weapon wind was created																																						
-	//												- destination:				weapon wind destination																																						
-																																																																														
-	//					- cellSize:			The size of a cell on the map																																														
-	//								Values of cell:																																														
-	//									- Training: 				35x35 pixel																																									
-	//									- Fighting:				55x55 pixel																																									
-	//					- gameStatus: 				Only have in fighting stage.																																													
-	//									running round:								2																																					
-	//									pause round:								3																																					
-	//									game over:								10																																					
-	//- tag: 		The reason for this ticktac update																																																				
-	//		Player's tag values:																																																				
-	//				player:moving-banned								Player's moving is blocking, two player moves to same cell.																																										
-	//				player:start-moving								Player is started moving.																																										
-	//				player:stop-moving								Player is stopped moving.																																										
-	//				player:be-isolated								Player is blocking in quarantine area.																																										
-	//				player:back-to-playground								Player was moved out quarantine area, and stand on floor.																																										
-	//				player:pick-spoil								Player just picked a spoil.																																										
-	//				player:stun-by-weapon								Notice when the player is stunned																																										
-	//				player:stun-timeout								Notifies the player that the stun time has expired.																																										
-	//		Bomb's tag values:																																																				
-	//				bomb:exploded								Bomb has exploded.																																										
-	//				bomb:setup								Bomb has setup on map.																																										
-	//		Game's tag values																																																				
-	//				start-game								Game is started.																																										
-	//				update-data								Auto looping in interval time. (Ex: every 500ms)																																										
-	//		Wedding's tag values:																																																				
-	//				player:into-wedding-room								Notice that the player go to the wedding room																																										
-	//				player:outto-wedding-room								Notice that the player leaving the wedding room																																										
-	//				player:completed wedding								Declare that the marriage is complete																																										
-	//		Hammer tag values																																																				
-	//				hammer:exploded								Location where the hammer hits																																										
-	//		Wooden-pestle tag values																																																				
-	//				Wooden-pestle:setup								Player starts to use pastle																																										
-	//		WeaponWind tag values																																																				
-	//				wind:exploded								Current location of the weapon wind (in horizontal and vertical)																																										
-																																																																														
-	//- player_id: 				The player’s id whose action made the update 																																																		
-	//- gameRemainTime:						Remain time in seconds of game before time over.																																																
-																																																																														
-	//API-3
-	//POST
-	//drive player
-	//METHOD																																		Send request to move your bot																						
-	//		socketClient.emit('drive player', Parameters)																																																								
-	//																																				Example-1: Move player with many steps																						
-	//		INPUT PARAMETERS																																		socketClient.emit('drive player', {																						
-	//			- direction:				The player's series of movement direction. Data type is String.																													    "direction": "1111333332222224444",																						
-	//							Value of direction:																													})																						
-	//									1 - Move LEFT																																																	
-	//									2 - Move RIGHT.																											Example-2: Move bomber with only one step																						
-	//									3 - Move UP																											socketClient.emit('drive player', {																						
-	//									4 - Move DOWN																											    "direction": "3",																						
-	//									b 	Based on the current weapon used to activate:																										})																						
-	//												- If the current weapon is a wooden bat. will perform a bat strike 																																															
-	//												in the direction of the character's face																								Example-3: Move player and use the weapon																						
-	//												- If the current weapon is a Phach Than. will perform a lightning strike																									socketClient.emit('drive player', {																						
-	//												at the current location																								    "direction": "111b2222",																						
-	//									x - Stop Moving																											})																						
-	//				- characterType:							The player decides who they want to control.																																																
-	//										If they want to control a `Supporting Character`. characterType is 'child'																										Example-4: Move `supporting character` with many steps																						
-	//																																				socketClient.emit('drive player', {																						
-	//										Supporting Character: This character will appear after the player marries Mi Nuong.																										    "direction": "1111333332222224444",																						
-	//		Data Format:				 JSON																														    "characterType": "child",																						
-	//																																				})																						
-	//		Data Structure:																																																								
-	//						{																														Example-5: Move `supporting character` with only one step																						
-	//							"direction": "xxxxx"																														socketClient.emit('drive player', {																						
-	//							"characterType": "child" | undefined																														    "direction": "2",																						
-	//						}																														    "characterType": "child",																						
-																																					})																						
-																																																																														
-																																					Example-6: Move `supporting character`  and use the weapon																						
-																				
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
 
+        [JsonPropertyName("timestamp")]
+        public string TimeStamp { get; set; }
+
+        [JsonPropertyName("map_info")]
+        public MapInfo MapInfo { get; set; }
+
+        [JsonPropertyName("tag")]
+        public string Tag { get; set; }
+
+        [JsonPropertyName("playerId:")]
+        public string PlayerId { get; set; }
+
+        [JsonPropertyName("gameRemainTime")]
+        public int GameRemainTime { get; set; }
+    }
+
+    public class MapInfo
+    {
+        [JsonPropertyName("size")]
+        public Size Size { get; set; }
+
+        [JsonPropertyName("players")]
+        public List<Player> Players { get; set; }
+
+        [JsonPropertyName("map")]
+        public List<List<int>> Map { get; set; } // 2D array of map values
+
+        [JsonPropertyName("bombs")]
+        public List<Bomb> Bombs { get; set; }
+
+        [JsonPropertyName("spoils")]
+        public List<Spoil> Spoils { get; set; }
+
+        [JsonPropertyName("weaponHammers")]
+        public List<WeaponHammer> WeaponHammers { get; set; }
+
+        [JsonPropertyName("weaponWinds")]
+        public List<WeaponWind> WeaponWinds { get; set; }
+
+        [JsonPropertyName("cellSize")]
+        public int CellSize { get; set; }
+
+        [JsonPropertyName("gameStatus")]
+        public EGameStatus? GameStatus { get; set; }
+    }
+
+    public class Size
+    {
+        [JsonPropertyName("rows")]
+        public int Rows { get; set; }
+
+        [JsonPropertyName("cols")]
+        public int Cols { get; set; }
+    }
+
+    public class Player
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [JsonPropertyName("spawnBegin")]
+        public SpawnBegin SpawnBegin { get; set; }
+
+        [JsonPropertyName("currentPosition")]
+        public CurrentPosition CurrentPosition { get; set; }
+
+        [JsonPropertyName("power")]
+        public int Power { get; set; }
+
+        [JsonPropertyName("speed")]
+        public int Speed { get; set; }
+
+        [JsonPropertyName("delay")]
+        public int Delay { get; set; }
+
+        [JsonPropertyName("score")]
+        public int Score { get; set; }
+
+        [JsonPropertyName("lives")]
+        public int Lives { get; set; }
+
+        [JsonPropertyName("box")]
+        public int Box { get; set; }
+
+        [JsonPropertyName("stickyRice")]
+        public int StickyRice { get; set; }
+
+        [JsonPropertyName("chungCake")]
+        public int ChungCake { get; set; }
+
+        [JsonPropertyName("nineTuskElephant")]
+        public int NineTuskElephant { get; set; }
+
+        [JsonPropertyName("nineSpurRooster")]
+        public int NineSpurRooster { get; set; }
+
+        [JsonPropertyName("nineManeHairHorse")]
+        public int NineManeHairHorse { get; set; }
+
+        [JsonPropertyName("holySpiritStone")]
+        public int HolySpiritStone { get; set; }
+
+        [JsonPropertyName("eternalBadge")]
+        public int EternalBadge { get; set; }
+
+        [JsonPropertyName("brickWall")]
+        public int BrickWall { get; set; }
+
+        [JsonPropertyName("transformType")]
+        public int TransformType { get; set; }
+
+        [JsonPropertyName("hasTransform")]
+        public bool HasTransform { get; set; }
+
+        [JsonPropertyName("ownerWeapon")]
+        public int[] OwnerWeapon { get; set; } = new int[1];
+
+        [JsonPropertyName("curWeapon")]
+        public int CurWeapon { get; set; }
+
+        [JsonPropertyName("isStun")]
+        public bool IsStun { get; set; }
+
+        [JsonPropertyName("timeToUseSpecialWeapons")]
+        public int TimeToUseSpecialWeapons { get; set; }
+    }
+
+    public class SpawnBegin
+    {
+        [JsonPropertyName("rows")]
+        public int Rows { get; set; }
+
+        [JsonPropertyName("cols")]
+        public int Cols { get; set; }
+    }
+
+    public class CurrentPosition
+    {
+        [JsonPropertyName("rows")]
+        public int Rows { get; set; }
+
+        [JsonPropertyName("cols")]
+        public int Cols { get; set; }
+    }
+
+    public class Bomb
+    {
+        [JsonPropertyName("rows")]
+        public int Rows { get; set; }
+
+        [JsonPropertyName("cols")]
+        public int Cols { get; set; }
+
+        [JsonPropertyName("remainTime")]
+        public int RemainTime { get; set; }
+
+        [JsonPropertyName("playerId:")]
+        public string PlayerId { get; set; }
+
+        [JsonPropertyName("power")]
+        public int Power { get; set; }
+
+        [JsonPropertyName("createdAt")]
+        public int CreatedAt { get; set; }
+    }
+
+    public class Spoil
+    {
+        [JsonPropertyName("rows")]
+        public int Rows { get; set; }
+
+        [JsonPropertyName("cols")]
+        public int Cols { get; set; }
+
+        [JsonPropertyName("spoil_type")]
+        public ESpoilType SpoilType { get; set; }
+    }
+
+    public class WeaponHammer
+    {
+        [JsonPropertyName("playerId")]
+        public string PlayerId { get; set; }
+
+        [JsonPropertyName("power")]
+        public int Power { get; set; }
+
+        [JsonPropertyName("destination")]
+        public int Destination { get; set; }
+
+        [JsonPropertyName("createdAt")]
+        public long CreatedAt { get; set; }
+    }
+
+    public class WeaponWind
+    {
+        [JsonPropertyName("playerId")]
+        public string PlayerId { get; set; }
+
+        [JsonPropertyName("currentRow")]
+        public int CurrentRow { get; set; }
+
+        [JsonPropertyName("currentCol")]
+        public int CurrentCol { get; set; }
+
+        [JsonPropertyName("createdAt")]
+        public long CreatedAt { get; set; }
+
+        [JsonPropertyName("destination")]
+        public int Destination { get; set; }
     }
 }
