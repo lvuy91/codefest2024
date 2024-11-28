@@ -36,6 +36,16 @@ internal class main
     MapCell.DragonEgg
 };
 
+    private string GetPathFromRoot(TreeNode node)
+    {
+        if (node.Parent == null)
+        {
+            return "";
+        }
+
+        return GetPathFromRoot(node.Parent) + node.Dir;
+    }
+
     private class TreeNode
     {
         public int Val { get; set; }
@@ -407,16 +417,6 @@ internal class main
             {
                 CanBomb = canBomb;
             }
-        }
-
-        private string GetPathFromRoot(TreeNode node)
-        {
-            if (node.Parent == null)
-            {
-                return "";
-            }
-
-            return GetPathFromRoot(node.Parent) + node.Dir;
         }
 
         private int To2dPos(int pos)
