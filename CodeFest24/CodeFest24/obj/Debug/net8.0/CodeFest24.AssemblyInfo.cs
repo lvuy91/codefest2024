@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeFest24")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bfc1470df54e46681238870b5bd586a978d00811")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeFest24")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeFest24")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

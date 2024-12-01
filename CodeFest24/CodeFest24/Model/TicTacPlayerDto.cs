@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace CodeFest24.Model
 {
@@ -15,22 +11,22 @@ namespace CodeFest24.Model
         public string TimeStamp { get; set; }
 
         [JsonPropertyName("map_info")]
-        public MapInfo MapInfo { get; set; }
+        public MapInfoDto MapInfo { get; set; }
 
         [JsonPropertyName("tag")]
         public string Tag { get; set; }
 
-        [JsonPropertyName("playerId:")]
+        [JsonPropertyName("playerId")]
         public string PlayerId { get; set; }
 
         [JsonPropertyName("gameRemainTime")]
         public int GameRemainTime { get; set; }
     }
 
-    public class MapInfo
+    public class MapInfoDto
     {
         [JsonPropertyName("size")]
-        public Size Size { get; set; }
+        public SizeDto Size { get; set; }
 
         [JsonPropertyName("players")]
         public List<Player> Players { get; set; }
@@ -57,7 +53,7 @@ namespace CodeFest24.Model
         public EGameStatus? GameStatus { get; set; }
     }
 
-    public class Size
+    public class SizeDto
     {
         [JsonPropertyName("rows")]
         public int Rows { get; set; }
@@ -136,6 +132,8 @@ namespace CodeFest24.Model
 
         [JsonPropertyName("timeToUseSpecialWeapons")]
         public int TimeToUseSpecialWeapons { get; set; }
+
+        public int Position { get; set; }
     }
 
     public class SpawnBegin
@@ -150,19 +148,19 @@ namespace CodeFest24.Model
     public class CurrentPosition
     {
         [JsonPropertyName("rows")]
-        public int Rows { get; set; }
+        public int Row { get; set; }
 
         [JsonPropertyName("cols")]
-        public int Cols { get; set; }
+        public int Col { get; set; }
     }
 
     public class Bomb
     {
         [JsonPropertyName("rows")]
-        public int Rows { get; set; }
+        public int Row { get; set; }
 
         [JsonPropertyName("cols")]
-        public int Cols { get; set; }
+        public int Col { get; set; }
 
         [JsonPropertyName("remainTime")]
         public int RemainTime { get; set; }
@@ -180,10 +178,10 @@ namespace CodeFest24.Model
     public class Spoil
     {
         [JsonPropertyName("rows")]
-        public int Rows { get; set; }
+        public int Row { get; set; }
 
         [JsonPropertyName("cols")]
-        public int Cols { get; set; }
+        public int Col { get; set; }
 
         [JsonPropertyName("spoil_type")]
         public ESpoilType SpoilType { get; set; }

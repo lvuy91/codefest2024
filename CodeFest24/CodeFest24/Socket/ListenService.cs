@@ -95,10 +95,6 @@ namespace CodeFest24.Socket
             };
         }
 
-        private static void JoinGame()
-        {
-
-        }
     }
 }
 
