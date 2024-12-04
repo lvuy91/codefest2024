@@ -9,7 +9,7 @@ namespace CodeFest24.Services
     {
 
         #region
-        public void ParseTicktack(string id, TicktackResponse res)
+        public void ParseTicktack(TicktackResponse res)
         {
             var mapInfo = res.MapInfo;
             MapInfo = mapInfo;
@@ -101,7 +101,7 @@ namespace CodeFest24.Services
             var playerPosition = Player.Position;
             InDanger = BombSpots.Contains(playerPosition);
             ReadMap1();
-           // [this.spot1, this.gstEgg1] = this.ReadMap2();
+            // [this.spot1, this.gstEgg1] = this.ReadMap2();
             Run();
         }
 
@@ -228,12 +228,12 @@ namespace CodeFest24.Services
             var root = new TreeNode(Player.Position);
             var node = GetAvoidBomb(root, Map, BombSpots);
 
-            if (node!=null)
+            if (node != null)
             {
                 //console.log('extend path', extendPath);
                 string path = GetPathFromRoot(node);
                 DrivePlayer(path, node);
-                StoreRoadMap([node]);
+                StoreRoadMap(new List<TreeNode> { node });
             }
         }
 
@@ -342,7 +342,7 @@ namespace CodeFest24.Services
                 }
             }
         }
-        
+
         public void GetAllLeaves(TreeNode startNode, List<List<int>> map)
         {
             AllLeaves = new Dictionary<int, TreeNode>();
@@ -353,7 +353,7 @@ namespace CodeFest24.Services
                 // Nếu ô hiện tại thuộc vị trí bomb, ngừng xử lý tại node này
                 if (BombSpots.Contains(currentNode.Val))
                 {
-                    return [new NodeDto(null, true)];
+                    return new NodeDto[1] { new NodeDto(null, true) };
                 }
 
                 // Nếu ô hiện tại có trứng, cộng điểm bonus
@@ -378,7 +378,7 @@ namespace CodeFest24.Services
                 }
 
                 // Trả về tiếp tục duyệt map
-                return [new NodeDto(null, false)];
+                return new NodeDto[1] { new NodeDto(null, false) };
             });
         }
 
@@ -1093,7 +1093,7 @@ namespace CodeFest24.Services
                 foreach (var neighbor in neighbors)
                 {
                     int cellValue = map[neighbor];
-                    if (cellValue == (int)MapCell.EmptyCell ||  cellValue == (int)MapCell.Balk)
+                    if (cellValue == (int)MapCell.EmptyCell || cellValue == (int)MapCell.Balk)
                     {
                         if (!visited.Contains(neighbor))
                         {
@@ -1144,7 +1144,7 @@ namespace CodeFest24.Services
 
                 if (Eggs.Contains(currentNode.Val))
                 {
-                    return [currentNode];
+                    return new TreeNode[1] { currentNode };
                 }
 
                 return null;
@@ -1216,7 +1216,7 @@ namespace CodeFest24.Services
                 foreach (var neighbor in neighbors)
                 {
                     var cellValue = map[neighbor];
-                    if (cellValue == (int)MapCell.EmptyCell ||  cellValue == (int)MapCell.Balk)
+                    if (cellValue == (int)MapCell.EmptyCell || cellValue == (int)MapCell.Balk)
                     {
                         if (!visited.Contains(neighbor))
                         {
@@ -1289,19 +1289,19 @@ namespace CodeFest24.Services
                 var loc = currentNode.Val;
 
                 // Kiểm tra nếu đối thủ hoặc bom đang ở gần
-                if (OpponentPositions.Contains(loc)||
+                if (OpponentPositions.Contains(loc) ||
                 BombDangers.Contains(loc))
                 {
-                    return [new NodeDto { Node = null, IsOk = true }];
+                    return new NodeDto[1] { new NodeDto { Node = null, IsOk = true } };
                 }
 
                 // Nếu vị trí hiện tại là mục tiêu, trả về nút hiện tại
                 if (currentNode.Val == target)
                 {
-                    return [new NodeDto { Node = currentNode, IsOk = true }];
+                    return new NodeDto[1] { new NodeDto { Node = currentNode, IsOk = true } };
                 }
 
-                return [new NodeDto { Node = null, IsOk = false }];
+            return new NodeDto[1] { new NodeDto { Node = null, IsOk = false } };
             });
 
             // Nếu tìm được đường đi, di chuyển đến đó

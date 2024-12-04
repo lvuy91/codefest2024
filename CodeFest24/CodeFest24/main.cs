@@ -1,5 +1,6 @@
 ﻿using CodeFest24.Enums;
 using CodeFest24.Model;
+using SocketIOSharp.Client;
 
 namespace CodeFest24.Services
 {
@@ -72,8 +73,8 @@ namespace CodeFest24.Services
         private int? SpecialSpot;
         private int CountGoExploreSpecialSpot = 0;
 
-        private static Quobject.SocketIoClientDotNet.Client.Socket Socket;
-        public static void SetSocket(Quobject.SocketIoClientDotNet.Client.Socket socket)
+        private static SocketIOClient Socket;
+        public static void SetSocket(SocketIOClient socket)
         {
             Socket = socket;
         }
