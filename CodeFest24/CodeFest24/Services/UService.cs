@@ -595,7 +595,7 @@ namespace CodeFest24.Services
 
             // Gửi lệnh để di chuyển người chơi và đặt bom
             // (Giả định đây là một hành động trong game với "b" là đặt bom)
-            Socket.Emit("drive player", new { direction = "b" });
+            Socket.EmitAsync("drive player", new { direction = "b" }).Wait();
 
             // Tăng số lần khám phá vị trí đặc biệt
             CountGoExploreSpecialSpot += 1;

@@ -1,6 +1,5 @@
 ﻿using CodeFest24.Enums;
 using CodeFest24.Model;
-using SocketIOSharp.Client;
 
 namespace CodeFest24.Services
 {
@@ -8,7 +7,7 @@ namespace CodeFest24.Services
     {
         private bool EndGame = false;
         private Dictionary<int, TreeNode> AllLeaves = new Dictionary<int, TreeNode>();
-        private List<TreeNode>GstTargets = new List<TreeNode>();
+        private List<TreeNode> GstTargets = new List<TreeNode>();
         private const int TimeInOneCell = 500;
         private const int AroundPivotLimit = 5;
         private const int MinimumDistance = 5;
@@ -49,7 +48,7 @@ namespace CodeFest24.Services
         private bool WaitForNextStop = false;
         private TreeNode PivotNode;
 
-        public static void SetPlayerId(string playerId)
+        public  void SetPlayerId(string playerId)
         {
             PlayerId = playerId;
         }
@@ -73,8 +72,8 @@ namespace CodeFest24.Services
         private int? SpecialSpot;
         private int CountGoExploreSpecialSpot = 0;
 
-        private static SocketIOClient Socket;
-        public static void SetSocket(SocketIOClient socket)
+        private static SocketIOClient.SocketIO Socket;
+        public void SetSocket(SocketIOClient.SocketIO socket)
         {
             Socket = socket;
         }

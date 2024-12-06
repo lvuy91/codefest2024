@@ -1,130 +1,111 @@
 ﻿using CodeFest24.Model;
 using CodeFest24.Services;
-using EngineIOSharp.Common.Enum;
-using Newtonsoft.Json.Linq;
-using SocketIOSharp.Client;
-using SocketIOSharp.Common;
-using System.Text.Json;
 
 namespace CodeFest24.SocketService
 {
     public class ListenService
     {
         private static RegisterPlayerDto _player = new();
+        private static UserDto _user = new();
         private static string server = string.Empty;
         //private static Quobject.SocketIoClientDotNet.Client.Socket socket;
 
-        private static SocketIOClient socket;// = new SocketIOClient(new SocketIOClientOption(EngineIOScheme.http, "localhost", 80));
+        private static SocketIOClient.SocketIO socket;// = new SocketIOClient(new SocketIOClientOption(EngineIOScheme.http, "localhost", 80));
         private static Main service = new Main();
 
-        private static void InitEventHandlers(SocketIOClient client)
+        private static void InitService(string playerId, string gameId, SocketIOClient.SocketIO socket)
         {
-            client.On(SocketIOEvent.CONNECTION, () =>
+            service.SetPlayerId(playerId);
+            service.SetSocket(socket);
+        }
+        private static async Task InitEventHandlers(SocketIOClient.SocketIO socket)
+        {
+            Console.WriteLine("Start");
+
+            socket.On("join game", response =>
             {
-                Console.WriteLine("Connected!");
-                var message = JsonSerializer.Serialize(_player);
-                Console.WriteLine(message);
-                client.Emit("join game", message);
+                // You can print the returned data first to decide what to do next.
+                // output: ["hi client"]
+                Console.WriteLine(response);
+
+                //   string text = response.GetValue<string>();
+
+
+                // The socket.io server code looks like this:
+                // socket.emit('hi', 'hi client');
             });
 
-            client.On(SocketIOEvent.DISCONNECT, () =>
+            socket.On("ticktack player", response =>
             {
-                Console.WriteLine();
-                Console.WriteLine("Disconnected!");
+                // You can print the returned data first to decide what to do next.
+                // output: ["ok",{"id":1,"name":"tom"}]
+                Console.WriteLine(response);
+                //service.ParseTicktack((TicktackResponse)response.);
+
+                // Get the first data in the response
+                //string text = response.GetValue<string>();
+                // Get the second data in the response
+                var dto = response.GetValue<TicktackResponse>(0);
+                service.ParseTicktack(dto);
+
+                // The socket.io server code looks like this:
+                // socket.emit('hi', 'ok', { id: 1, name: 'tom'});
             });
 
-            client.On("ticktack player", (Data) =>
+            socket.OnConnected += async (sender, e) =>
             {
-                Console.WriteLine("Echo : " + (Data[0].Type == JTokenType.Bytes ? BitConverter.ToString(Data[0].ToObject<byte[]>()) : Data[0]));
-            });
+                Console.WriteLine("On Connect");
+                // Emit a string
+                await socket.EmitAsync("join game", _player);
+                await socket.EmitAsync("register character power", _user);
+                Console.WriteLine("End emit");
 
-            client.On("join game", (Data) =>
+                // Emit a string and an object
+                //var dto = new TestDTO { Id = 123, Name = "bob" };
+                //await socket.EmitAsync("register", "source", dto);
+            };
+
+            socket.OnError += async (sender, e) =>
             {
-                Console.WriteLine("Echo1 : " + Data[0]);
-                Console.WriteLine("Echo2 : " + Data[1]);
-            });
+                Console.WriteLine("On Error");
+                // Emit a string
 
-            //// Listening for the 'join game' event
-            //client.On("join game", (Data) =>
-            //{
-            //    // Your callback logic here
-            //    Console.WriteLine("Joined game with data: " + Data);
-            //});
-            ////	Return a ticktack every time game updates an event		
+                // Emit a string and an object
+                //var dto = new TestDTO { Id = 123, Name = "bob" };
+                //await socket.EmitAsync("register", "source", dto);
+            };
 
-            //client.On("ticktack player", (Data) =>
-            //{
-            //    //service.ParseTicktack((TicktackResponse)data);
-            //});
+
+            socket.OnDisconnected += async (sender, e) =>
+            {
+                Console.WriteLine("On Disconect");
+                // Emit a string
+            };
+            await socket.ConnectAsync();
         }
-        public static void InitSocket(string url = "localhost", ushort port = 80)
+
+
+        public static async Task InitSocket(string url = "localhost:81")
         {
-            socket = new SocketIOClient(new SocketIOClientOption(EngineIOScheme.http, url, port));
-            InitEventHandlers(socket);
-
-            //// Listening for the 'join game' event
-            //socket.On("join game", (data) =>
-            //{
-            //    // Your callback logic here
-            //    Console.WriteLine("Joined game with data: " + data);
-            //});
-            ////	Return a ticktack every time game updates an event		
-
-            //socket.On("ticktack player", (data) =>
-            //{
-            //    //service.ParseTicktack((TicktackResponse)data);
-            //});
-
-            //// Emitting the 'join game' event
-
-            //socket.On(Socket.EVENT_CONNECT, () =>
-            //{
-            //    Console.WriteLine("on connect");
-            //    var message = JsonSerializer.Serialize(_player);
-            //    Console.WriteLine(message);
-            //    var em = socket.Emit("join game", message);
-
-            //    em.On(Socket.EVENT_CONNECT_ERROR, (a) =>
-            //    {
-            //        Console.WriteLine("Error");
-            //        Console.WriteLine(a);
-            //    });
-
-            //    em.On(Socket.EVENT_CONNECT, (a) =>
-            //    {
-            //        Console.WriteLine("Connect");
-            //        Console.WriteLine(a);
-            //    });
-            //});
-            socket.Connect();
+            socket = new SocketIOClient.SocketIO(url);
+            await InitEventHandlers(socket);
         }
 
-        private static void JoinGame()
-        {
-
-        }
-
-
-
-        static void Reconnect()
-        {
-            Console.WriteLine("Attempting to reconnect...");
-            socket.Connect();
-        }
-
-        public static void Main()
-        {
-            JoinGame();
-        }
-
-        public static void SetPlayer(string gameId, string playerId)
+        public static void SetPlayer(string gameId, string playerId, string type)
         {
             _player = new()
             {
                 PlayerId = playerId,
                 GameId = gameId
             };
+            _user = new UserDto()
+            {
+                gameId = gameId,
+                playerId = playerId,
+                type = type
+            };
         }
+
 
     }
 }
